@@ -10,7 +10,7 @@ function ProductsList() {
   return (
     <div>
       {" "}
-      <Row xs={1} md={2} className="g-4">
+      <Row className="g-4" lg={4} align="center">
         {items.map((item: any) => (
           <Col>
             <ProductCard item={item} />
