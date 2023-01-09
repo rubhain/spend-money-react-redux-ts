@@ -68,7 +68,7 @@ function ProductCard(props: any) {
             type="number"
             value={count}
             onChange={(e: any) => {
-              handleChange(e.target.value);
+              handleChange(parseInt(e.target.value));
             }}
           ></input>
           <Button variant="primary" onClick={buyItem} disabled={buyBtn}>
