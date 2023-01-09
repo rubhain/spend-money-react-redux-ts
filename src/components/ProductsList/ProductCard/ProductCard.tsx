@@ -5,6 +5,8 @@ import { budgetCounter } from "../../../storage/products/productsSlice";
 
 function ProductCard(props: any) {
   const [count, setCount] = useState(0);
+  const [sellBtn, setSellBtn] = useState(true);
+  const [buyBtn, setBuyBtn] = useState<boolean>();
 
   const product = props.item;
   const budget = useSelector((state: any) => state.products.budget);
@@ -22,6 +24,35 @@ function ProductCard(props: any) {
     setCount(Number(count) - 1);
   };
 
+  useEffect(() => {
+    if (count > 0) {
+      setSellBtn(false);
+    } else {
+      setSellBtn(true);
+    }
+  }, [count]);
+
+  useEffect(() => {
+    if (product.productPrice > budget) {
+      setBuyBtn(true);
+    } else {
+      setBuyBtn(false);
+    }
+  }, [budget]);
+
+  const handleChange = (value: number) => {
+    const maxCount = Math.floor(budget / product.productPrice) + count;
+    if (value && value > 0) {
+      if (value > maxCount && budget >= 0) {
+        setCount(maxCount);
+      } else {
+        setCount(value);
+      }
+    } else {
+      setCount(0);
+    }
+  };
+
   return (
     <div>
       {" "}
@@ -30,11 +61,17 @@ function ProductCard(props: any) {
         <Card.Body>
           <Card.Title>{product.productName}</Card.Title>
           <Card.Text>${product.productPrice}</Card.Text>
-          <Button variant="secondary" onClick={sellItem}>
+          <Button variant="secondary" onClick={sellItem} disabled={sellBtn}>
             Sell
           </Button>
-          <input type="number" value={count}></input>
-          <Button variant="primary" onClick={buyItem}>
+          <input
+            type="number"
+            value={count}
+            onChange={(e: any) => {
+              handleChange(e.target.value);
+            }}
+          ></input>
+          <Button variant="primary" onClick={buyItem} disabled={buyBtn}>
             Buy
           </Button>
         </Card.Body>
