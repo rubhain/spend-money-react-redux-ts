@@ -56,8 +56,12 @@ function ProductCard(props: any) {
   return (
     <div>
       {" "}
-      <Card border="secondary" style={{ width: "18rem", height: "30rem" }}>
-        <Card.Img variant="top" src={product.image} />
+      <Card border="secondary" style={{ width: "30rem", height: "30rem" }}>
+        <Card.Img
+          variant="top"
+          src={product.image}
+          style={{ height: "15rem" }}
+        />
         <Card.Body>
           <Card.Title>{product.productName}</Card.Title>
           <Card.Text>${product.productPrice}</Card.Text>
